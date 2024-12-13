@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<!-- persistence.xml är en konfigurationsfil som används av JPA för att definiera persistence-unit,
+ vilket är en samling av entiteter som hanteras tillsammans-->
+<!-- Filen innehåller information om hur JPA ska interagera med databasen, vilka databasinställningar
+och även vilka entiteter som ska ingå -->
+<persistence xmlns="https://jakarta.ee/xml/ns/persistence"
+             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+             xsi:schemaLocation="https://jakarta.ee/xml/ns/persistence https://jakarta.ee/xml/ns/persistence/persistence_3_0.xsd"
+             version="3.0">
+    <!-- Följande kod är nödvändiga properties för att kunna ansluta till databasen Derby -->
+    <!-- persitence-unit name definierar alla våra entity classes som lagras i databasen-->
+    <!-- När data sparas eller uppdateras i databasen använder JPA transaktioner, på det sättet
+    säkerställa att operationerna genomförs på ett stadigt sätt -->
+    <!-- Därför lägger vi till -transaction-type="JTA", detta gör att servern omhändertar transaktionshantering,
+     då kan vi använda transactions-->
+    <persistence-unit name="default" transaction-type="JTA">
+        <!-- Här specificerar vi att default data-source, som är inbyggd i glassfish, kommer att användas.
+        Default databasen kommer vara derby -->
+        <jta-data-source>jdbc/__default</jta-data-source>
+        <properties>
+            <!-- Dessa tre properties gör att JPA kan skapa databastabeller
+            samt generera tabellerna automatiskt -->
+            <property name="eclipselink.ddl-generation" value="create-tables"/>
+            <property name="eclipselink.ddl-generation.output-mode" value="database"/>
+            <property name="javax.persistence.schema-generation.database.action" value="create"/>
+        </properties>
+
+    </persistence-unit>
+</persistence>
